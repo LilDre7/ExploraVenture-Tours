@@ -23,17 +23,17 @@ const locationsRoute = require("./routes/locationRoute");
 
 // !! 🦴 Rutas para identificar el crud de la aplicacion !! 🦴 //
 
-app.use("/api/v1/users", usersRoute);
+// app.use("/api/v1/users", usersRoute);
 
-app.use("/api/v1/booking", bookingRoute);
+// app.use("/api/v1/booking", bookingRoute);
 
-app.use("/api/v1/reviews", reviewsRoute);
+// app.use("/api/v1/reviews", reviewsRoute);
 
-app.use("/api/v1/tours", toursRoute);
+// app.use("/api/v1/tours", toursRoute);
 
-app.use("/api/v1/toursImgs", toursImgsRoute);
+// app.use("/api/v1/toursImgs", toursImgsRoute);
 
-app.use("/api/v1/locations", locationsRoute);
+// app.use("/api/v1/locations", locationsRoute);
 
 //** 🪢 Funcion para detectar rutas invalidas y enviar un mensaje de error 🪢 **//
 
