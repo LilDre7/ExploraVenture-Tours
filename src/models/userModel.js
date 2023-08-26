@@ -26,7 +26,6 @@ const USER = db.define("Users", {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
   },
   passwordChangeAt: {
     type: DataTypes.DATE,
