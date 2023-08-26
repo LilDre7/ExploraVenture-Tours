@@ -15,7 +15,7 @@ db.sync({ force: false })
   })
   .catch((err) => console.log(err));
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5000;
 
 app.listen(() => {
   console.log(`App running on port ${PORT} 🌞 `.bgBlue.red);
