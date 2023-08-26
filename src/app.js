@@ -23,7 +23,9 @@ const locationsRoute = require("./routes/locationRoute");
 
 // !! 🦴 Rutas para identificar el crud de la aplicacion !! 🦴 //
 
-// app.use("/api/v1/users", usersRoute);
+// app.use("/api/v1/auth", usersRoute);
+
+// app.use("/api/v1/user", usersRoute);
 
 // app.use("/api/v1/booking", bookingRoute);
 
