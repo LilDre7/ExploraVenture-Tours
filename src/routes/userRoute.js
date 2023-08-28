@@ -4,12 +4,13 @@ const router = express.Router();
 
 // ** 🪢 AUTH MIDDLEWARE 🪢 ** //
 const auth = require("../middleware/authMiddleware");
+const authValidate = require("../middleware/authValidate");
 
 // ** 🦴 AUTH CONTROLLER 🦴 ** //
 const authController = require("../controllers/userController");
 
 // ** 🧨 AUTH ROUTE 🧨 ** //
-router.route("/signup").post(authController.signup);
+router.route("/signup").post(authValidate.authValidate, authController.signup);
 router.route("/login").post(authController.login);
 
 router.use(auth.protect);
