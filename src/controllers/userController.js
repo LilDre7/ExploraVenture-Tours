@@ -50,7 +50,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   if (!findLogin)
     next(
-      new AppError("La contraseña es incorrecta intente nuevamente 🌚", 404)
+      new AppError("La contraseña es incorrecta intente nuevamente 🌚 ", 404)
     );
 
   // Validar si la contraseña es correcta de bcrypt
@@ -74,13 +74,28 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.renew = catchAsync(async (req, res, next) => {
+  // Renovar el token del usuario
   const { id } = req.params;
 
-  const { name, email } = req.body;
-
-  const updateSignup = await USER.findOne({
+  const findLogin = await USER.findOne({
     where: {
       id: id,
+    },
+  });
+
+  if (!findLogin) next(new AppError("El usuario no existe", 404));
+
+  const token = await generateJWT(findLogin.id);
+
+  res.status(200).json({
+    status: "success",
+    message: "Token renewed successfully",
+    token,
+    user: {
+      id: findLogin.id,
+      name: findLogin.name,
+      email: findLogin.email,
+      photo: findLogin.photo,
     },
   });
 });

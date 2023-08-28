@@ -2,7 +2,8 @@ const express = require("express");
 
 const router = express.Router();
 
-// ** 🪢 AUTH MIDDLEWARE 🪢 ** //  ㅤ
+// ** 🪢 AUTH MIDDLEWARE 🪢 ** //
+const auth = require("../middleware/authMiddleware");
 
 // ** 🦴 AUTH CONTROLLER 🦴 ** //
 const authController = require("../controllers/userController");
@@ -10,7 +11,9 @@ const authController = require("../controllers/userController");
 // ** 🧨 AUTH ROUTE 🧨 ** //
 router.route("/signup").post(authController.signup);
 router.route("/login").post(authController.login);
-router.route("/renew").get(authController.renew);
+
+router.use(auth.protect);
+router.route("/renew/:id").get(authController.renew);
 
 //                                        //
 

@@ -1,7 +1,8 @@
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
+const USER = require("../models/userModel");
 const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
-
-const ModelName = require("../models/ModelFile");
 
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
@@ -14,7 +15,10 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   if (!token) {
     return next(
-      new AppError("You are not logged in! Please log in to get access", 401)
+      new AppError(
+        "You are not logged in! Please log in to get access 🧨 ",
+        401
+      )
     );
   }
 
@@ -23,10 +27,9 @@ exports.protect = catchAsync(async (req, res, next) => {
     process.env.SECRET_JWT_SEED
   );
 
-  const user = await ModelName.findOne({
+  const user = await USER.findOne({
     where: {
       id: decoded.id,
-      status: true,
     },
   });
 
@@ -71,7 +74,7 @@ exports.restrictTo = (...roles) => {
   };
 };
 
-exports.protectAccountOwner = catchAsync(async (req, res, next) => {
+exports.protectOrderOwner = catchAsync(async (req, res, next) => {
   const { user, sessionUser } = req;
 
   if (user.id !== sessionUser.id) {
