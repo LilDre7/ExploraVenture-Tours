@@ -2,15 +2,25 @@ const express = require("express");
 
 const router = express.Router();
 
-// ** 🪢 AUTH MIDDLEWARE 🪢 ** //
+// ** 🪢 AUTH MIDDLEWARES 🪢 ** //
 const auth = require("../middleware/authMiddleware");
 const authValidate = require("../middleware/authValidate");
 
-// ** 🦴 AUTH CONTROLLER 🦴 ** //
+// ** 🎈 AUTH UTILS 🎈 ** //
+const upload = require("../utils/multer");
+
+// ** 🦴 AUTH CONTROLLERS 🦴 ** //
 const authController = require("../controllers/userController");
 
-// ** 🧨 AUTH ROUTE 🧨 ** //
-router.route("/signup").post(authValidate.authValidate, authController.signup);
+// ** 🧨 AUTH ROUTES 🧨 ** //
+router
+  .route("/signup")
+  .post(
+    upload.single("ProfileImageUrl"),
+    authValidate.authValidate,
+    authController.signup
+  );
+
 router.route("/login").post(authController.login);
 
 router.use(auth.protect);
