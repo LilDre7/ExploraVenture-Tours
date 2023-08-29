@@ -7,7 +7,7 @@ const auth = require("../middleware/authMiddleware");
 const authValidate = require("../middleware/authValidate");
 
 // ** 🎈 AUTH UTILS 🎈 ** //
-const upload = require("../utils/multer");
+const { upload } = require("../utils/multer");
 
 // ** 🦴 AUTH CONTROLLERS 🦴 ** //
 const authController = require("../controllers/userController");
@@ -16,7 +16,7 @@ const authController = require("../controllers/userController");
 router
   .route("/signup")
   .post(
-    upload.single("ProfileImageUrl"),
+    upload.single("profileImgUrl"),
     authValidate.authValidate,
     authController.signup
   );

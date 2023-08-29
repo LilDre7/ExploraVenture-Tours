@@ -3,47 +3,46 @@ const AppError = require("../utils/appError");
 const USER = require("../models/userModel");
 const generateJWT = require("../utils/jwt");
 const bcrypt = require("bcryptjs");
+const { getStorage, ref, uploadBytes } = require("firebase/storage");
+const { storage } = require("../utils/firabase");
 
 exports.signup = catchAsync(async (req, res, next) => {
   const { name, email, photo, password } = req.body;
 
-  console.log("name:", name);
-  console.table(req.body);
+  const imgRef = ref(storage, `usersImagesProfile/${req.file.originalname}`);
 
-  console.table(req.file);
+  const userExisten = await USER.findOne({
+    where: {
+      email: email,
+    },
+  });
 
-  // const userExisten = await USER.findOne({
-  //   where: {
-  //     email: email,
-  //   },
-  // });
+  if (userExisten)
+    next(
+      new AppError(
+        `El email deber unico este ya existe: ${email} 🌞 Intenta con otro email 🌱 `,
+        400
+      )
+    );
 
-  // if (userExisten)
-  //   next(
-  //     new AppError(
-  //       `El email deber unico este ya existe: ${email} 🌞 Intenta con otro email 🌱 `,
-  //       400
-  //     )
-  //   );
+  // ** Encriptar la contreña del usuario ** //
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
 
-  // // ** Encriptar la contreña del usuario ** //
-  // const salt = await bcrypt.genSalt(10);
-  // const hashPassword = await bcrypt.hash(password, salt);
+  const newUser = await USER.create({
+    name: name,
+    email: email,
+    photo: photo,
+    password: hashPassword,
+  });
 
-  // const newUser = await USER.create({
-  //   name: name,
-  //   email: email,
-  //   photo: photo,
-  //   password: hashPassword,
-  // });
-
-  // res.status(201).json({
-  //   status: "success",
-  //   message: "User created successfully",
-  //   data: {
-  //     newUser,
-  //   },
-  // });
+  res.status(201).json({
+    status: "success",
+    message: "User created successfully",
+    data: {
+      newUser,
+    },
+  });
 });
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
