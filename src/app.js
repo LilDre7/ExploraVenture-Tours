@@ -20,6 +20,7 @@ const globalErrorHandler = require("./controllers/errorController");
 
 // ==🧨 Rutas de los controllers para indentificar el crud 🧨 == //
 
+const authRoute = require("./routes/authRoute");
 const usersRoute = require("./routes/userRoute");
 const bookingRoute = require("./routes/bookingRoute");
 const reviewsRoute = require("./routes/reviewsRoute");
@@ -29,9 +30,9 @@ const locationsRoute = require("./routes/locationRoute");
 
 // !! 🦴 Rutas para identificar el crud de la aplicacion !! 🦴 //
 
-// app.use("/api/v1/auth", usersRoute);
+app.use("/api/v1/auth", authRoute);
 
-app.use("/api/v1/user", usersRoute);
+// app.use("/api/v1/user", usersRoute);
 
 // app.use("/api/v1/booking", bookingRoute);
 
