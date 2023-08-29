@@ -7,9 +7,14 @@ const { getStorage, ref, uploadBytes } = require("firebase/storage");
 const { storage } = require("../utils/firabase");
 
 exports.signup = catchAsync(async (req, res, next) => {
-  const { name, email, photo, password } = req.body;
+  const { name, email, password } = req.body;
 
-  const imgRef = ref(storage, `usersImagesProfile/${req.file.originalname}`);
+  const imgRef = ref(
+    storage,
+    `usersImagesProfile/${Date.now()}-${req.file.originalname}`
+  );
+
+  const imgUploaded = await uploadBytes(imgRef, req.file.buffer);
 
   const userExisten = await USER.findOne({
     where: {
@@ -32,8 +37,8 @@ exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await USER.create({
     name: name,
     email: email,
-    photo: photo,
     password: hashPassword,
+    profileImgUrl: imgUploaded.metadata.fullPath,
   });
 
   res.status(201).json({
