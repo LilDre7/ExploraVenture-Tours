@@ -46,12 +46,12 @@ app.use("/api/v1/auth", authRoute);
 
 //** 🪢 Funcion para detectar rutas invalidas y enviar un mensaje de error 🪢 **//
 
-app.use("*", (req, res, next) => {
+app.use(`*`, (req, res, next) => {
   return next(
-    AppError(
+    new AppError(
       `La ruta es incorrecta o no existe ${req.originalUrl} 🧨🧨 `,
       404,
-      "fail"
+      fail
     )
   );
 });
