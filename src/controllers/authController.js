@@ -55,22 +55,14 @@ exports.login = catchAsync(async (req, res, next) => {
   const findLogin = await USER.findOne({
     where: {
       email: email,
-      password: password,
     },
   });
 
-  if (!findLogin) {
-    return next(
-      new AppError("La contraseña es incorrecta intente nuevamente 🌚 ", 404)
-    );
-  }
+  if (!findLogin) next(new AppError("El usuario buscado no existe 🌚 ", 404));
 
   // Validar si la contraseña es correcta de bcrypt
-  if (!(await bcrypt.compare(password, findLogin.password))) {
-    return next(
-      new AppError("La contraseña es incorrecta intente nuevamente", 404)
-    );
-  }
+  if (!(await bcrypt.compare(password, findLogin.password)))
+    next(new AppError("La contraseña es incorrecta intente nuevamente", 404));
 
   // Generar el token
   const token = await generateJWT(findLogin.id);
@@ -83,6 +75,8 @@ exports.login = catchAsync(async (req, res, next) => {
       id: findLogin.id,
       name: findLogin.name,
       email: findLogin.email,
+      photo: findLogin.photo,
+      role: findLogin.role,
     },
   });
 });

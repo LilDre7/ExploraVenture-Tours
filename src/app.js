@@ -32,7 +32,7 @@ const locationsRoute = require("./routes/locationRoute");
 
 app.use("/api/v1/auth", authRoute);
 
-// app.use("/api/v1/user", usersRoute);
+app.use("/api/v1/user", usersRoute);
 
 // app.use("/api/v1/booking", bookingRoute);
 
@@ -51,7 +51,7 @@ app.use(`*`, (req, res, next) => {
     new AppError(
       `La ruta es incorrecta o no existe ${req.originalUrl} 🧨🧨 `,
       404,
-      fail
+      "fail"
     )
   );
 });

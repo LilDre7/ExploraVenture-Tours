@@ -3,18 +3,24 @@ const AppError = require("../utils/appError");
 const User = require("../models/userModel");
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.findAll();
+  const users = await User.findAll({
+    attributes: ["id", "name", "email", "role"],
+  });
 
   res.status(200).json({
     status: "success",
     message: "All users",
+    AllUsers: users.length,
     data: {
       users,
     },
   });
 });
 
-exports.updatePassword = catchAsync(async (req, res, next) => {});
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  const { password } = req.body;
+  const { id } = req.params;
+});
 
 exports.getUser = catchAsync(async (req, res, next) => {});
 
