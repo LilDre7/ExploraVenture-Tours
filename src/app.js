@@ -34,11 +34,11 @@ app.use("/api/v1/auth", authRoute);
 
 app.use("/api/v1/user", usersRoute);
 
-// app.use("/api/v1/booking", bookingRoute);
+app.use("/api/v1/tours", toursRoute);
 
 // app.use("/api/v1/reviews", reviewsRoute);
 
-// app.use("/api/v1/tours", toursRoute);
+// app.use("/api/v1/booking", bookingRoute);
 
 // app.use("/api/v1/toursImgs", toursImgsRoute);
 
