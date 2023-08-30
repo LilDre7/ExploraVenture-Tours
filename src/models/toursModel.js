@@ -71,21 +71,18 @@ const TOUR = db.define("tours", {
   },
   startLocationId: {
     type: DataTypes.INTEGER,
-    // autoIncrement: true,
     allowNull: false,
     defaultValue: 0,
     unique: true,
   },
   locationsId: {
     type: DataTypes.INTEGER,
-    // autoIncrement: true,
     allowNull: false,
     defaultValue: 0,
     unique: true,
   },
   guidesId: {
     type: DataTypes.INTEGER,
-    // autoIncrement: true,
     allowNull: false,
     defaultValue: 0,
     unique: true,

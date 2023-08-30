@@ -12,13 +12,19 @@ const authMiddleware = require("../middleware/authMiddleware");
 const userController = require("../controllers/userController");
 
 // ** 🧨 USER  ROUTE 🧨  ** //
+
+// 🎈 ----------------------- 🎈 //
+router.use(authMiddleware.protect);
+// 🎈 ----------------------- 🎈 //
+
 router.route("/").get(userController.getAllUsers); // ✅
 
 router
   .route("/password/:id")
   .patch(
-    authMiddleware.validateUserId,
     userValidate.validateNewPassword,
+    authMiddleware.protectOrderOwner,
+    authMiddleware.validateUserId,
     authMiddleware.protect,
     userController.updatePassword
   ); // ✅
@@ -33,7 +39,9 @@ router.route("/tours/:id").delete(userController.getAllUsersForRol);
 
 router.route("/:userId/tours/:id").get(userController.getAllUsersForTour);
 
-router.route("/:id").delete(userController.deleteUser);
+router
+  .route("/:id")
+  .delete(authMiddleware.validateUserId, userController.deleteUser); // ✅
 
 router.route("/bookings").get(userController.getAllBookings);
 

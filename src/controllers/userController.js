@@ -95,7 +95,35 @@ exports.getAllUsersForRol = catchAsync(async (req, res, next) => {});
 
 exports.getAllUsersForTour = catchAsync(async (req, res, next) => {});
 
-exports.deleteUser = catchAsync(async (req, res, next) => {});
+exports.deleteUser = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+
+  const findDeleteUser = await USER.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  if (findDeleteUser.status === "inactive")
+    next(
+      new AppError(
+        ` 🧨 El usuario ${findDeleteUser.name} ya esta eliminado 🧨 `,
+        400
+      )
+    );
+
+  const deleteUser = await findDeleteUser.update({
+    status: "inactive",
+  });
+
+  res.status(200).json({
+    status: "sucess",
+    message: ` 🧨 Usuario ${findDeleteUser.name} eliminado correctamente 🧨 `,
+    dataUser: {
+      deleteUser,
+    },
+  });
+});
 
 exports.getAllBookings = catchAsync(async (req, res, next) => {});
 
