@@ -22,10 +22,10 @@ router.route("/").get(userController.getAllUsers); // ✅
 router
   .route("/password/:id")
   .patch(
+    authMiddleware.protect,
+    authMiddleware.validateUserId,
     userValidate.validateNewPassword,
     authMiddleware.protectOrderOwner,
-    authMiddleware.validateUserId,
-    authMiddleware.protect,
     userController.updatePassword
   ); // ✅
 
@@ -33,7 +33,11 @@ router.route("/:id").get(authMiddleware.validateUserId, userController.getUser);
 
 router
   .route("/:id")
-  .patch(authMiddleware.validateUserId, userController.updateUser); // ✅
+  .patch(
+    userValidate.validateUpdateUser,
+    authMiddleware.validateUserId,
+    userController.updateUser
+  ); // ✅
 
 router.route("/tours/:id").delete(userController.getAllUsersForRol);
 
@@ -41,7 +45,11 @@ router.route("/:userId/tours/:id").get(userController.getAllUsersForTour);
 
 router
   .route("/:id")
-  .delete(authMiddleware.validateUserId, userController.deleteUser); // ✅
+  .delete(
+    authMiddleware.validateUserId,
+    authMiddleware.protectOrderOwner,
+    userController.deleteUser
+  ); // ✅
 
 router.route("/bookings").get(userController.getAllBookings);
 

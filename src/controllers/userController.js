@@ -25,6 +25,15 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   const { currentPassword, newPassword } = req.body;
 
+  if (currentPassword === newPassword) {
+    return next(
+      new AppError(
+        ` 🧨 La nueva contraseña no puede ser igual a la actual 🧨 `,
+        401
+      )
+    );
+  }
+
   if (!(await bcrypt.compare(currentPassword, user.password))) {
     return next(new AppError(`La contraseña actual no es correcta 🦊`, 401));
   }

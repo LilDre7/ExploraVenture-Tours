@@ -13,6 +13,23 @@ const validateFields = (req, res, next) => {
   next();
 };
 
+exports.validateUpdateUser = [
+  body("name")
+    .not()
+    .isEmpty()
+    .isLength({ min: 3 })
+    .withMessage("El nombre debe tener al menos 3 caracteres"),
+  body("email")
+    .not()
+    .isEmpty()
+    .isLength({ min: 8, max: 50 })
+    .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
+    .withMessage(
+      "Tu correo debe cumplir un formato parecido al siguiente: 'nombredeusuario@dominio.com'."
+    ),
+  validateFields,
+];
+
 exports.validateNewPassword = [
   body("currentPassword")
     .not()
