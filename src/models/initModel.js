@@ -1,5 +1,5 @@
 const USER = require("../models/userModel");
-const TOUR = require("../models/toursModel");
+const TOUR = require("../models/tourModel");
 const REVIEW = require("../models/reviewsModel");
 
 const initModel = () => {

@@ -2,7 +2,7 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const USER = require("../models/userModel");
 const bcrypt = require("bcryptjs");
-const TOUR = require("../models/toursModel");
+const TOURS = require("../models/tourModel");
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   const users = await USER.findAll({

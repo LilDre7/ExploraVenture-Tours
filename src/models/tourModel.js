@@ -1,13 +1,12 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes, Sequelize } = require("sequelize");
 const { db } = require("../db/config");
 
-const TOUR = db.define("Tours", {
+const TOURS = db.define("Tour", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
-    primaryKey: false,
     allowNull: false,
-    unique: true,
+    primaryKey: false,
   },
   name: {
     type: DataTypes.STRING,
@@ -73,19 +72,17 @@ const TOUR = db.define("Tours", {
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 0,
-    unique: true,
   },
   locationsId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 0,
-    unique: true,
   },
   guidesId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 0,
-    unique: true,
+    primaryKey: true,
   },
   status: {
     type: DataTypes.ENUM("pending", "confirmed", "canceled"),
@@ -94,4 +91,4 @@ const TOUR = db.define("Tours", {
   },
 });
 
-module.exports = TOUR;
+module.exports = TOURS;

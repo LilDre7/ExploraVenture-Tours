@@ -16,9 +16,7 @@ router
   .get(tourController.getAllTours)
   .post(tourController.createTour);
 
-router
-  .route("/:id")
-  .get(authMiddleware.validateUserId, tourController.getTourById);
+router.route("/:id").get(tourController.getTourById);
 
 router.route("/:id").patch(tourController.updateTourById);
 
