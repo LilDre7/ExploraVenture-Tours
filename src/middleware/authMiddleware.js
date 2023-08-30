@@ -83,3 +83,18 @@ exports.protectOrderOwner = catchAsync(async (req, res, next) => {
 
   next();
 });
+
+// Function que me valida que el id del usuario exista de lo contrario enviar un error
+exports.validateUserId = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+
+  const user = await USER.findOne({ where: { id } });
+
+  // Este if para para verificar el user fue encontrado con el where
+  if (!user)
+    next(new AppError(` 🧨 El usuario con el id:${id} no existe 🧨 `, 404));
+
+  req.user = user;
+
+  next();
+});

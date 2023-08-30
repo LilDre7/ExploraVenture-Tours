@@ -1,9 +1,11 @@
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
-const User = require("../models/userModel");
+const USER = require("../models/userModel");
+const bcrypt = require("bcryptjs");
+const TOUR = require("../models/toursModel");
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.findAll({
+  const users = await USER.findAll({
     attributes: ["id", "name", "email", "role"],
   });
 
@@ -18,13 +20,76 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
-  const { password } = req.body;
-  const { id } = req.params;
+  // ** Actualizar la contraseña del usuario ** //
+  const { user } = req;
+
+  const { currentPassword, newPassword } = req.body;
+
+  if (!(await bcrypt.compare(currentPassword, user.password))) {
+    return next(new AppError(`La contraseña actual no es correcta 🦊`, 401));
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const encrytedPassword = await bcrypt.hash(newPassword, salt);
+
+  await user.update({
+    password: encrytedPassword,
+    passwordChangedAt: new Date(),
+  });
+
+  return res.status(200).json({
+    status: "success",
+    message: `La contraseña del usuario ${user.name} ha sido actualizada correctamente 🥷🏾⚔️`,
+    data: {
+      user,
+    },
+  });
 });
 
-exports.getUser = catchAsync(async (req, res, next) => {});
+exports.getUser = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
 
-exports.updateUser = catchAsync(async (req, res, next) => {});
+  const findUserId = await USER.findOne({
+    where: {
+      id: id,
+    },
+    attributes: ["id", "name", "email", "role"],
+  });
+
+  res.status(200).json({
+    status: "sucess",
+    message: `Usuario ${findUserId.name} encontrado 🌚 `,
+    YourUser: {
+      findUserId,
+    },
+  });
+});
+
+exports.updateUser = catchAsync(async (req, res, next) => {
+  // Actualizar el name y email info por req.body
+  const { id } = req.params;
+
+  const { name, email } = req.body;
+
+  const findUserUpdate = await USER.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  const updateInfo = await findUserUpdate.update({
+    name,
+    email,
+  });
+
+  res.status(200).json({
+    status: "sucess",
+    message: `Usuario ${name} actualizado correctamente  `,
+    YourUser: {
+      updateInfo,
+    },
+  });
+});
 
 exports.getAllUsersForRol = catchAsync(async (req, res, next) => {});
 

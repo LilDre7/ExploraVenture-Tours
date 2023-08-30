@@ -6,18 +6,28 @@ const router = express.Router();
 
 // ** 🪢 USER MIDDLEWARE 🪢  ** //
 const userValidate = require("../middleware/userValidate");
+const authMiddleware = require("../middleware/authMiddleware");
 
 // ** 🦴 USER CONTROLLER 🦴  ** //
 const userController = require("../controllers/userController");
 
 // ** 🧨 USER  ROUTE 🧨  ** //
-router.route("/").get(userController.getAllUsers);
+router.route("/").get(userController.getAllUsers); // ✅
 
-router.route("/password").patch(userController.updatePassword);
+router
+  .route("/password/:id")
+  .patch(
+    authMiddleware.validateUserId,
+    userValidate.validateNewPassword,
+    authMiddleware.protect,
+    userController.updatePassword
+  ); // ✅
 
-router.route("/:id").get(userController.getUser);
+router.route("/:id").get(authMiddleware.validateUserId, userController.getUser); // ✅
 
-router.route("/:id").patch(userController.updateUser);
+router
+  .route("/:id")
+  .patch(authMiddleware.validateUserId, userController.updateUser); // ✅
 
 router.route("/tours/:id").delete(userController.getAllUsersForRol);
 
