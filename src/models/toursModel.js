@@ -1,17 +1,17 @@
 const { DataTypes } = require("sequelize");
 const { db } = require("../db/config");
 
-const TOUR = db.define("tours", {
+const TOUR = db.define("Tours", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
-    primaryKey: true,
+    primaryKey: false,
     allowNull: false,
     unique: true,
   },
   name: {
-    defaultValue: "Playas del Coco",
     type: DataTypes.STRING,
+    defaultValue: "Playas del Coco",
     allowNull: false,
   },
   slug: {
@@ -30,9 +30,9 @@ const TOUR = db.define("tours", {
     defaultValue: 0,
   },
   difficulty: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: 0,
+    defaultValue: "facil",
   },
   ratingsAverage: {
     type: DataTypes.INTEGER,

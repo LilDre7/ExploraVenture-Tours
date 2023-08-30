@@ -2,6 +2,7 @@ require("dotenv").config();
 const colors = require("colors");
 const app = require("./app");
 const { db } = require("./db/config");
+const INITMODEL = require("./models/initModel");
 
 db.authenticate()
   .then(() => {
@@ -9,7 +10,9 @@ db.authenticate()
   })
   .catch((err) => console.log(err));
 
-db.sync({ force: false })
+INITMODEL();
+
+db.sync({ force: true })
   .then(() => {
     console.log("Database synced 🦧 ".bgMagenta.black);
   })

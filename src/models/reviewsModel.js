@@ -1,10 +1,11 @@
 const { DataTypes } = require("sequelize");
 const { db } = require("../db/config");
 
-const REVIEW = db.define("reviews", {
+const REVIEW = db.define("Reviews", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
+    primaryKey: true,
     allowNull: false,
     unique: true,
   },
@@ -20,13 +21,11 @@ const REVIEW = db.define("reviews", {
   },
   tourId: {
     type: DataTypes.INTEGER,
-    autoIncrement: true,
     allowNull: false,
     unique: true,
   },
   userId: {
     type: DataTypes.INTEGER,
-    autoIncrement: true,
     allowNull: false,
     unique: true,
   },
