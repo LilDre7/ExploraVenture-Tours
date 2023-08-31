@@ -1,4 +1,4 @@
-const { DataTypes, Sequelize } = require("sequelize");
+const { DataTypes, Sequelize, DATEONLY } = require("sequelize");
 const { db } = require("../db/config");
 
 const TOURS = db.define("Tour", {
@@ -31,7 +31,7 @@ const TOURS = db.define("Tour", {
   difficulty: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: "facil",
+    defaultValue: "Easy",
   },
   ratingsAverage: {
     type: DataTypes.INTEGER,
@@ -85,7 +85,7 @@ const TOURS = db.define("Tour", {
     primaryKey: true,
   },
   status: {
-    type: DataTypes.ENUM("pending", "confirmed", "canceled"),
+    type: DataTypes.ENUM("pending", "confirmed", "deleted"),
     allowNull: false,
     defaultValue: "pending",
   },

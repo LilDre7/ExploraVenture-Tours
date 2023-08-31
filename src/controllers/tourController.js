@@ -66,6 +66,17 @@ exports.createTour = catchAsync(async (req, res, next) => {
     guidesId,
   } = req.body;
 
+  // Validar si ya existe un tour con el mismo guidesId
+  const existingTour = await TOURS.findOne({
+    where: {
+      guidesId: guidesId,
+    },
+  });
+
+  if (existingTour)
+    next(new AppError(" 🧍🏾‍♂️ El guía ya tiene asignado un tour. 🧗🏾‍♂️ ", 400));
+
+  // Crear el nuevo tour si no existe conflicto
   const newTour = await TOURS.create({
     name,
     slug,
@@ -84,31 +95,100 @@ exports.createTour = catchAsync(async (req, res, next) => {
     guidesId,
   });
 
-  const tourFilter = await TOURS.findOne({
-    where: {
-      newTour: newTour.guidesId,
-      guidesId: newTour.guidesId,
-    },
-  });
-
-  if (tourFilter && tourFilter.id !== newTour.guidesId) {
-    // El id del guía es diferente al que se envía por Postman, procede con la consulta
-  } else {
-    // El id del guía es igual al que se envía por Postman, devuelve un error o realiza alguna acción necesaria
-  }
-
   if (!newTour)
-    next(new AppError(" 🧨 Hubo un error al crear el tour deseado 🧨", 404));
+    next(new AppError(" 🧨 Hubo un error al crear el tour deseado. 🧨 ", 500));
 
   res.status(201).json({
     status: "success",
-    message: ` 🌚🌞 Aqui el tour creado con el id:${newTour.id} felicidades por tu tour 🌞🌚 `,
+    message: ` 🧿 Tour creado con el id: ${newTour.id} felicidades 🎈🌞 `,
     data: {
       tour: newTour,
     },
   });
 });
 
-exports.updateTourById = catchAsync(async (req, res, next) => {});
+exports.updateTourById = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const {
+    name,
+    slug,
+    duration,
+    maxGroupSize,
+    difficulty,
+    ratingsAverage,
+    ratingsQuantity,
+    price,
+    priceDiscount,
+    summary,
+    imageCover,
+    startDates,
+    startLocationId,
+    locationsId,
+    guidesId,
+  } = req.body;
 
-exports.deleteTourById = catchAsync(async (req, res, next) => {});
+  const findOneUser = await TOURS.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  if (!findOneUser)
+    next(new AppError(`El id:${id} no existe intente nuevamente  🌞⚔️`, 404));
+
+  const updateInfoTour = await findOneUser.update({
+    name,
+    slug,
+    duration,
+    maxGroupSize,
+    difficulty,
+    ratingsAverage,
+    ratingsQuantity,
+    price,
+    priceDiscount,
+    summary,
+    imageCover,
+    startDates,
+    startLocationId,
+    locationsId,
+    guidesId,
+  });
+
+  res.status(200).json({
+    status: "success",
+    message: "Tu informacion del tour se actualizo con exito ✅",
+    data: {
+      updateInfoTour: updateInfoTour,
+    },
+  });
+});
+
+exports.deleteTourById = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+
+  const findTourId = await TOURS.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  if (!findTourId)
+    next(
+      new AppError(
+        ` 🧨 El id:${id} buscado no existe intenta nuevamente 🧨 `,
+        404
+      )
+    );
+
+  const deleteTour = await findTourId.update({
+    status: "deleted",
+  });
+
+  res.status(200).json({
+    status: "success",
+    message: " ⚔️ Tu tour se elimino con exito, espero vuelvas pronto  ⚔️ ",
+    data: {
+      deleteTour: deleteTour,
+    },
+  });
+});
