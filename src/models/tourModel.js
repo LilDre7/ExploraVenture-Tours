@@ -85,9 +85,9 @@ const TOURS = db.define("Tour", {
     primaryKey: true,
   },
   status: {
-    type: DataTypes.ENUM("pending", "confirmed", "deleted"),
+    type: DataTypes.ENUM("active", "deleted"),
     allowNull: false,
-    defaultValue: "pending",
+    defaultValue: "active",
   },
 });
 
