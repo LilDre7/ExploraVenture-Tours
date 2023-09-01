@@ -17,4 +17,14 @@ const router = express.Router();
 
 // ** 🧨 USER  ROUTE 🧨  ** //
 
+router.route("/").get();
+
+router.route("/:id").get();
+
+router.route("/:tourId").post();
+
+router.route("/:tourId/:id").patch();
+
+router.route("/:tourId/:id").delete();
+
 module.exports = router;
