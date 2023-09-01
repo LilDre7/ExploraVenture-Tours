@@ -5,11 +5,11 @@ const router = express.Router();
 //                                        //
 
 // ** 🪢 USER MIDDLEWARE 🪢  ** //
-// const authMiddleware = require("../middleware/authMiddleware");
-// const tourValidate = require("../middleware/toursValidate");
+const authMiddleware = require("../middleware/authMiddleware");
+const reviewValidate = require("../middleware/reviewValidate");
 
 // ** 🦴 USER CONTROLLER 🦴  ** //
-// const tourController = require("../controllers/tourController");
+const reviewController = require("../controllers/reviewsController");
 
 // 🎈 ----------------------- 🎈 //
 // router.use(authMiddleware.protect);
@@ -17,14 +17,14 @@ const router = express.Router();
 
 // ** 🧨 USER  ROUTE 🧨  ** //
 
-router.route("/").get();
+router.route("/").get(reviewController.getAllReviews);
 
-router.route("/:id").get();
+router.route("/:id").get(reviewController.getReviewForId);
 
-router.route("/:tourId").post();
+router.route("/:tourId").post(reviewController.createReviewForTour);
 
-router.route("/:tourId/:id").patch();
+router.route("/:tourId/:id").patch(reviewController.updateReviewTour);
 
-router.route("/:tourId/:id").delete();
+router.route("/:tourId/:id").delete(reviewController.deleteReviewTour);
 
 module.exports = router;
