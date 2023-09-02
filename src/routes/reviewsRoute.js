@@ -23,7 +23,7 @@ router.route("/:id").get(reviewController.getReviewForId);
 
 router
   .route("/:tourId")
-  .post(authMiddleware.validateUserId, reviewController.createReviewForTour);
+  .post(authMiddleware.protect, reviewController.createReviewForTour);
 
 router.route("/:tourId/:id").patch(reviewController.updateReviewTour);
 

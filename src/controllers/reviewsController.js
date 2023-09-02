@@ -34,27 +34,7 @@ exports.getReviewForId = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createReviewForTour = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
-  const { review, rating } = req.body;
-  const { tourId } = req.session.user;
-
-  const findTour = await Review.findOne({ where: { tourId: id } });
-
-  const newReview = await findTour.create({
-    review,
-    rating,
-    tourId: id,
-  });
-
-  res.status(201).json({
-    status: "success",
-    message: ` ⚔️ Tu review fue creada con exito, felicidades 🎈 `,
-    review: {
-      newReview: newReview,
-    },
-  });
-});
+exports.createReviewForTour = catchAsync(async (req, res, next) => {});
 
 exports.updateReviewTour = catchAsync(async (req, res, next) => {});
 
