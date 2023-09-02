@@ -21,7 +21,9 @@ router.route("/").get(reviewController.getAllReviews);
 
 router.route("/:id").get(reviewController.getReviewForId);
 
-router.route("/:tourId").post(reviewController.createReviewForTour);
+router
+  .route("/:tourId")
+  .post(authMiddleware.validateUserId, reviewController.createReviewForTour);
 
 router.route("/:tourId/:id").patch(reviewController.updateReviewTour);
 

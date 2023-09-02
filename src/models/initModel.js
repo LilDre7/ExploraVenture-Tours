@@ -12,6 +12,8 @@ const initModel = () => {
   REVIEW.belongsTo(TOUR);
 
   // Relacion de Usuarios a reviews
+  USER.hasMany(REVIEW);
+  REVIEW.belongsTo(USER);
 };
 
 module.exports = initModel;

@@ -22,9 +22,9 @@ const globalErrorHandler = require("./controllers/errorController");
 
 const authRoute = require("./routes/authRoute");
 const usersRoute = require("./routes/userRoute");
-const bookingRoute = require("./routes/bookingRoute");
-const reviewsRoute = require("./routes/reviewsRoute");
 const toursRoute = require("./routes/tourRoute");
+const reviewsRoute = require("./routes/reviewsRoute");
+const bookingRoute = require("./routes/bookingRoute");
 const toursImgsRoute = require("./routes/toursImgsRoute");
 const locationsRoute = require("./routes/locationRoute");
 
@@ -36,7 +36,7 @@ app.use("/api/v1/user", usersRoute);
 
 app.use("/api/v1/tours", toursRoute);
 
-// app.use("/api/v1/reviews", reviewsRoute);
+app.use("/api/v1/reviews", reviewsRoute);
 
 // app.use("/api/v1/booking", bookingRoute);
 
