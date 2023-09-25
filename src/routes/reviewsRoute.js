@@ -12,11 +12,14 @@ const reviewValidate = require("../middleware/reviewValidate");
 const reviewController = require("../controllers/reviewsController");
 
 // 🎈 ----------------------- 🎈 //
-router.use(authMiddleware.protect);
+// router.use(authMiddleware.protect);
 // 🎈 ----------------------- 🎈 //
 
-// ** 🧨 USER  ROUTE 🧨  ** //
+// 🪐 Usuario en session 🪐 //
+// router.use(authMiddleware.validateUserId);
+// ----------- 🪐 ------------- //
 
+// ** 🧨 USER  ROUTE 🧨  ** //
 router.route("/").get(reviewController.getAllReviews);
 
 router.route("/:id").get(reviewController.getReviewForId);

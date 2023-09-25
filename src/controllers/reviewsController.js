@@ -34,7 +34,30 @@ exports.getReviewForId = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createReviewForTour = catchAsync(async (req, res, next) => {});
+exports.createReviewForTour = catchAsync(async (req, res, next) => {
+  // El tourId es el id del tour al cual se le creara la review.
+  const { tourId } = req.params;
+  const { review, rating } = req.body;
+  // EL userId se debe obtener del usuario en sesion
+  const { userId } = req.session.user;
+
+  const findTourdId = await Review.findOne({ where: { tourId: tourId } });
+
+  const newReview = await findTourdId.create({
+    where: {
+      review: review,
+      rating: rating,
+    },
+  });
+
+  res.status(201).json({
+    status: "success",
+    message: "Tu review fue creada con exito ✅",
+    review: {
+      newReview: newReview,
+    },
+  });
+});
 
 exports.updateReviewTour = catchAsync(async (req, res, next) => {});
 
