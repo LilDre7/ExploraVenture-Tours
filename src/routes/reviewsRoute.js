@@ -16,7 +16,7 @@ const reviewController = require("../controllers/reviewsController");
 // 🎈 ----------------------- 🎈 //
 
 // 🪐 Usuario en session 🪐 //
-// router.use(authMiddleware.validateUserId);
+router.use(authMiddleware.validateUserId);
 // ----------- 🪐 ------------- //
 
 // ** 🧨 USER  ROUTE 🧨  ** //
