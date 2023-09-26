@@ -71,9 +71,16 @@ exports.createReviewForTour = catchAsync(async (req, res, next) => {
 
 exports.updateReviewTour = catchAsync(async (req, res, next) => {
   // Debo obtener el userId que es el id del usuario
-  const userId = req.sessionUser.id;
   const { id } = req.params;
   const { review, rating } = req.body;
+  const { tourId } = req.params;
+
+  // Verificar el userId si exista
+  const findTour = await TOURS.findOne({ where: { id: tourId } });
+
+  // Verificar que el tour exista
+  if (!findTour)
+    next(new AppError(`El tour con el id:${tourId} no existe 🤬 `, 404));
 
   const updateReview = await REVIEW.update(
     {
@@ -84,11 +91,16 @@ exports.updateReviewTour = catchAsync(async (req, res, next) => {
   );
 
   if (updateReview <= 0)
-    next(new AppError(`La review con el id:${id} no existe  `, 404));
+    next(
+      new AppError(
+        `La review con el id:${id} no existe intenta nuevamente 😬🌞 `,
+        404
+      )
+    );
 
   res.status(200).json({
     status: "success",
-    message: `Tu review con el id:${id} fue actualizada con éxito  `,
+    message: `Tu review con el id:${id} fue actualizada con éxito🏆 `,
     review: {
       updateReview: updateReview,
     },
