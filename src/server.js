@@ -13,7 +13,7 @@ db.authenticate()
 
 INITMODEL();
 
-db.sync({ force: false })
+db.sync({ force: true })
   .then(() => {
     console.log("Database synced 🦧 ".bgMagenta.black);
   })
