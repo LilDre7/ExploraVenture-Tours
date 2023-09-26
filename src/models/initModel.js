@@ -14,6 +14,10 @@ const initModel = () => {
   // Relacion de Usuarios a reviews
   USER.hasMany(REVIEW);
   REVIEW.belongsTo(USER);
+
+  // Relacion de reviews a Tours
+  // REVIEW.hasMany(TOUR);
+  // TOUR.belongsTo(REVIEW);
 };
 
 module.exports = initModel;

@@ -1,6 +1,7 @@
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const Review = require("../models/reviewsModel");
+const REVIEW = require("../models/reviewsModel");
 
 exports.getAllReviews = catchAsync(async (req, res, next) => {
   const allReviews = await Review.findAll();
@@ -34,34 +35,7 @@ exports.getReviewForId = catchAsync(async (req, res, next) => {
   });
 });
 
-const REVIEW = require("../models/reviewsModel"); // Asegúrate de importar tu modelo de revisión aquí
-
-exports.createReviewForTour = async (req, res, next) => {
-  try {
-    const { tourId } = req.params; // Obtener el tourId de los parámetros de la URL
-    const { review, rating } = req.body; // Obtener la revisión y la calificación del cuerpo de la solicitud
-    const { id } = req.sessionUser;
-
-    // Validar que el tourId exista en la base de datos
-    const findTour = await REVIEW.findOne({ where: { tourId: tourId } });
-
-    // Crear una nueva revisión en la base de datos
-    const newReview = await findTour.create({
-      userId: id,
-      tourId,
-      review,
-      rating,
-    });
-
-    res.status(201).json({
-      status: "success",
-      message: "Tu revisión ha sido creada con éxito ✅",
-      review: newReview,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+exports.createReviewForTour = catchAsync(async (req, res, next) => {});
 
 exports.updateReviewTour = catchAsync(async (req, res, next) => {});
 
