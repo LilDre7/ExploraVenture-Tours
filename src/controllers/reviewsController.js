@@ -107,4 +107,43 @@ exports.updateReviewTour = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.deleteReviewTour = catchAsync(async (req, res, next) => {});
+exports.deleteReviewTour = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const { tourId } = req.params;
+
+  const findTour = await TOURS.findOne({ where: { id: tourId } });
+
+  // Verificar que el tour exista
+  if (!findTour)
+    next(new AppError(`El tour con el id:${tourId} no existe 🤬 `, 404));
+
+  // Verificar que la review exista
+  const findReview = await REVIEW.findOne({ where: { id: id } });
+  if (!findReview)
+    next(
+      new AppError(
+        `La review con el id:${id} no existe, intentanuevamente 😬⚔️`,
+        404
+      )
+    );
+
+  if (REVIEW.status === "canceled")
+    next(
+      new AppError(
+        `La review con el id:${id} ya fue cancelada su review 🤬 `,
+        404
+      )
+    );
+
+  await REVIEW.update(
+    {
+      status: "canceled",
+    },
+    { where: { id: id } }
+  );
+
+  res.status(200).json({
+    status: "success",
+    message: `Tu review con el id:${id} fue eliminada con éxito  🏆 `,
+  });
+});

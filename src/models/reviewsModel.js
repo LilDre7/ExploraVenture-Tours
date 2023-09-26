@@ -28,9 +28,9 @@ const REVIEW = db.define("Reviews", {
     allowNull: false,
   },
   status: {
-    type: DataTypes.ENUM("pending", "confirmed", "canceled"),
+    type: DataTypes.ENUM("confirmed", "canceled"),
     allowNull: false,
-    defaultValue: "pending",
+    defaultValue: "confirmed",
   },
 });
 
