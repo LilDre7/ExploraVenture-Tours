@@ -12,7 +12,7 @@ const reviewValidate = require("../middleware/reviewValidate");
 const reviewController = require("../controllers/reviewsController");
 
 // 🎈 ----------------------- 🎈 //
-router.use(authMiddleware.protect);
+// router.use(authMiddleware.protect);
 // 🎈 ----------------------- 🎈 //
 
 // 🪐 Usuario en session 🪐 //

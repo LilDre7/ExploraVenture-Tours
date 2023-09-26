@@ -26,7 +26,6 @@ const REVIEW = db.define("Reviews", {
   userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    unique: true,
   },
   status: {
     type: DataTypes.ENUM("pending", "confirmed", "canceled"),
