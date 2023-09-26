@@ -22,7 +22,6 @@ const REVIEW = db.define("Reviews", {
   tourId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    unique: true,
   },
   userId: {
     type: DataTypes.INTEGER,
