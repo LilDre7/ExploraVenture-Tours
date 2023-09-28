@@ -69,6 +69,8 @@ exports.createReviewForTour = catchAsync(async (req, res, next) => {
   });
 });
 
+// ** Antes de actualizar o eliminar cualquier review verificar que el tour exista y que la review exista  ** //
+
 exports.updateReviewTour = catchAsync(async (req, res, next) => {
   // Debo obtener el userId que es el id del usuario
   const { id } = req.params;
