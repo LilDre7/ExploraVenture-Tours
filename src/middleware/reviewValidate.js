@@ -1,4 +1,4 @@
-const { validationResult } = require("express-validator");
+const { validationResult, body } = require("express-validator");
 
 const validateFields = (req, res, next) => {
   const errors = validationResult(req);
@@ -13,4 +13,8 @@ const validateFields = (req, res, next) => {
   next();
 };
 
-exports.validateReview = [];
+exports.validateReview = [
+  body("review").review().isEmpty().withMessage("El comentario es requerido"),
+  body("rating").rating().isEmpty().withMessage("El rating es requerido"),
+  validateFields,
+];
