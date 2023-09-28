@@ -19,6 +19,8 @@ router.use(authMiddleware.protect);
 // router.use(authMiddleware.validateUserId);
 // ----------- 🪐 ------------- //
 
+// Solo el usuario dueño de la review podrá eliminar o actualizar su review.
+
 // ** 🧨 USER  ROUTE 🧨  ** //
 router.route("/").get(reviewController.getAllReviews);
 
