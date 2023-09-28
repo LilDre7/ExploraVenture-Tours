@@ -14,7 +14,7 @@ const validateFields = (req, res, next) => {
 };
 
 exports.validateReview = [
-  body("review").review().isEmpty().withMessage("El comentario es requerido"),
-  body("rating").rating().isEmpty().withMessage("El rating es requerido"),
+  body("review").isEmpty().withMessage("El comentario es requerido"),
+  body("rating").isEmpty().withMessage("El rating es requerido"),
   validateFields,
 ];
