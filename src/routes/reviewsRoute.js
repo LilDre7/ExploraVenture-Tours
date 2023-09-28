@@ -15,13 +15,9 @@ const reviewController = require("../controllers/reviewsController");
 router.use(authMiddleware.protect);
 // 🎈 ----------------------- 🎈 //
 
-// 🪐 Usuario en session 🪐 //
+// 🪐 Usuario en session Id 🪐 //
 // router.use(authMiddleware.validateUserId);
 // ----------- 🪐 ------------- //
-
-// Solo el usuario dueño de la review podrá eliminar o actualizar su review.
-
-router.use(authMiddleware.restrictTo("admin"));
 
 // ** 🧨 USER  ROUTE 🧨  ** //
 router.route("/").get(reviewController.getAllReviews);
@@ -39,11 +35,14 @@ router
 router
   .route("/:tourId/:id")
   .patch(
+    authMiddleware.protectOrderOwner,
     reviewValidate.validateReview,
     authMiddleware.protect,
     reviewController.updateReviewTour
   );
 
-router.route("/:tourId/:id").delete(reviewController.deleteReviewTour);
+router
+  .route("/:tourId/:id")
+  .delete(authMiddleware.protectOrderOwner, reviewController.deleteReviewTour);
 
 module.exports = router;
