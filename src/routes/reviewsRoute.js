@@ -21,6 +21,8 @@ router.use(authMiddleware.protect);
 
 // Solo el usuario dueño de la review podrá eliminar o actualizar su review.
 
+router.use(authMiddleware.restrictTo("admin"));
+
 // ** 🧨 USER  ROUTE 🧨  ** //
 router.route("/").get(reviewController.getAllReviews);
 
