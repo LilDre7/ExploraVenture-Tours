@@ -26,11 +26,19 @@ router.route("/:id").get(reviewController.getReviewForId);
 
 router
   .route("/:tourId")
-  .post(authMiddleware.protect, reviewController.createReviewForTour);
+  .post(
+    reviewValidate.validateReview,
+    authMiddleware.protect,
+    reviewController.createReviewForTour
+  );
 
 router
   .route("/:tourId/:id")
-  .patch(authMiddleware.protect, reviewController.updateReviewTour);
+  .patch(
+    reviewValidate.validateReview,
+    authMiddleware.protect,
+    reviewController.updateReviewTour
+  );
 
 router.route("/:tourId/:id").delete(reviewController.deleteReviewTour);
 
