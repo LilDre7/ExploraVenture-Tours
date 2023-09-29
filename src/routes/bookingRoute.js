@@ -16,11 +16,13 @@ router.use(authMiddleware.protect);
 
 //                                        //
 
-router.route("/").get(bookController.getAllBookings);
+router
+  .route("/")
+  .get(authMiddleware.restrictTo("admin"), bookController.getAllBookings);
 
 router.route("/:id").get(bookController.getOneBooking);
 
-router.route("/:tourId").post(bookController.createBooking);
+router.route("/").post(bookController.createBooking);
 
 router.route("/:tourId/:id").patch(bookController.updateBooking);
 

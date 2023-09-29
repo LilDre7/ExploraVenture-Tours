@@ -40,7 +40,6 @@ exports.createReviewForTour = catchAsync(async (req, res, next) => {
   const userId = req.sessionUser.id;
   // Debo obtener el tourId que es el id del tour
   const { tourId } = req.params;
-  console.log(tourId);
   // Obtener del req.body -> review, rating
   const { review, rating } = req.body;
 

@@ -11,13 +11,11 @@ const BOOKING = db.define("bookings", {
   },
   tourId: {
     type: DataTypes.INTEGER,
-    autoIncrement: true,
     allowNull: false,
     unique: true,
   },
   userId: {
     type: DataTypes.INTEGER,
-    autoIncrement: true,
     allowNull: false,
     unique: true,
   },
