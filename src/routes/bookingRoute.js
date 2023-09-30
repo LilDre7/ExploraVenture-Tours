@@ -16,7 +16,7 @@ const bookController = require("../controllers/bookingController");
 
 //                                        //
 
-router.route(authMiddleware.restrictTo("admin"));
+router.route(authMiddleware.restrictTo("guide"));
 
 router.route("/").get(bookController.getAllBookings);
 
