@@ -87,6 +87,11 @@ exports.createBooking = catchAsync(async (req, res, next) => {
   });
 });
 
+/* Se debe poder actualizar una reserva, solo se podrá actualizar el precio,
+enviarlo por la req.body, solo el usuario que hizo la reserva puede
+modificarla.
+*/
+
 exports.updateBooking = catchAsync(async (req, res, next) => {});
 
 exports.deleteBooking = catchAsync(async (req, res, next) => {});
