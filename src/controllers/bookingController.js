@@ -99,12 +99,21 @@ exports.updateBooking = catchAsync(async (req, res, next) => {
   const findPrice = await BOOKING.findOne({
     where: {
       status: "pending",
+      id: id,
     },
   });
 
+  if (!findPrice)
+    next(
+      new AppError(`El id: ${id} no existe en nuestras reservacion ❌🤬 `, 404)
+    );
+
   if (price <= 50)
     next(
-      new AppError("¡La reserva tiene un valor minimo de 50$, pura vida! 😀✌🏾 ")
+      new AppError(
+        "¡La reserva tiene un valor minimo de 50$, pura vida! 😀✌🏾 ",
+        404
+      )
     );
 
   const updateBooking = await BOOKING.update(
@@ -127,4 +136,28 @@ exports.updateBooking = catchAsync(async (req, res, next) => {
 
 // Se debe poder cancelar una reserva, modificar el status a cancelled, solo el
 // usuario que hizo la reserva puede eliminarla.
-exports.deleteBooking = catchAsync(async (req, res, next) => {});
+exports.deleteBooking = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+
+  const findBookingId = await BOOKING.findOne({
+    where: {
+      status: "pending",
+      id: id,
+    },
+  });
+
+  if (!findBookingId)
+    next(
+      new AppError(`El id: ${id} no existe en nuestras reservacion ❌🤬 `, 404)
+    );
+
+  const updateBooking = await findBookingId.update({
+    status: "cancelled",
+  });
+
+  res.status(200).json({
+    status: "success",
+    message: "Booking deleted",
+    updateBooking,
+  });
+});

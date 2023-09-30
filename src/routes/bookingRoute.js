@@ -10,6 +10,8 @@ const authMiddleware = require("../middleware/authMiddleware");
 // ** 🦴 BOOKING CONTROLLER 🦴  ** /
 const bookController = require("../controllers/bookingController");
 
+const validateBook = require("../middleware/bookingValidate");
+
 // ** 📨 BOOKING RUTES 📨 ** //
 
 router.use(authMiddleware.protect);
@@ -22,11 +24,15 @@ router.route("/").get(bookController.getAllBookings);
 
 router.route("/:id").get(bookController.getOneBooking);
 
-router.route("/").post(bookController.createBooking);
+router
+  .route("/")
+  .post(validateBook.validateBooking, bookController.createBooking);
 
-router.route("/:tourId/:id").patch(bookController.updateBooking);
+router
+  .route("/:id")
+  .patch(validateBook.validateBooking, bookController.updateBooking);
 
-router.route("/:tourId/:id").delete(bookController.deleteBooking);
+router.route("/:id").delete(bookController.deleteBooking);
 
 //                                        //
 
