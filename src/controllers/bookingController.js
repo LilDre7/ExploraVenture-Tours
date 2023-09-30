@@ -59,13 +59,15 @@ exports.getOneBooking = catchAsync(async (req, res, next) => {
 // Se debe crear una reserva, enviar userId, tourId, y price por la req.body
 exports.createBooking = catchAsync(async (req, res, next) => {
   const { userId, tourId, price } = req.body;
+
+  console.log(userId, tourId, price);
+
   // Verificar que el tour exista
-  const findTour = await TOUR.findOne({
+  const findTour = await BOOKING.findOne({
     where: {
       id: tourId,
-      status: "available",
       price: price,
-      userId: userId,
+      userId: userId, // Asegúrate de que sea "userId", no "UserId"
     },
   });
 
@@ -73,9 +75,9 @@ exports.createBooking = catchAsync(async (req, res, next) => {
     next(new AppError(404, "El tour con el id:${tourId} no existe 🧑🏾‍🚀 "));
 
   const createBooking = await BOOKING.create({
-    userId,
     tourId,
     price,
+    userId, // Agrega userId aquí
   });
 
   res.status(201).json({

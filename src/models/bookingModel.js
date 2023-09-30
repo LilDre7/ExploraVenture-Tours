@@ -7,12 +7,10 @@ const BOOKING = db.define("bookings", {
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
-    unique: true,
   },
   tourId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    unique: true,
   },
   userId: {
     type: DataTypes.INTEGER,

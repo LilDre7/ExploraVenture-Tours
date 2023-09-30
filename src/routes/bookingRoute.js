@@ -12,7 +12,7 @@ const bookController = require("../controllers/bookingController");
 
 // ** 📨 BOOKING RUTES 📨 ** //
 
-router.use(authMiddleware.protect);
+// router.use(authMiddleware.protect);
 
 //                                        //
 
