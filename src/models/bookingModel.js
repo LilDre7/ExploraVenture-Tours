@@ -21,7 +21,7 @@ const BOOKING = db.define("bookings", {
     allowNull: false,
   },
   status: {
-    type: DataTypes.ENUM("pending", "confirmed", "canceled"),
+    type: DataTypes.ENUM("pending", "confirmed", "cancelled"),
     allowNull: false,
     defaultValue: "pending",
   },

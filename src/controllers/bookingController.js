@@ -92,6 +92,39 @@ enviarlo por la req.body, solo el usuario que hizo la reserva puede
 modificarla.
 */
 
-exports.updateBooking = catchAsync(async (req, res, next) => {});
+exports.updateBooking = catchAsync(async (req, res, next) => {
+  const { price } = req.body;
+  const { id } = req.params;
 
+  const findPrice = await BOOKING.findOne({
+    where: {
+      status: "pending",
+    },
+  });
+
+  if (price <= 50)
+    next(
+      new AppError("¡La reserva tiene un valor minimo de 50$, pura vida! 😀✌🏾 ")
+    );
+
+  const updateBooking = await BOOKING.update(
+    {
+      price: price,
+    },
+    {
+      where: {
+        id,
+      },
+    }
+  );
+
+  res.status(200).json({
+    status: "success",
+    message: "El precio de la reserva se actualizo correctamente 🏆🚀 ",
+    NuevoPrecio: updateBooking.price,
+  });
+});
+
+// Se debe poder cancelar una reserva, modificar el status a cancelled, solo el
+// usuario que hizo la reserva puede eliminarla.
 exports.deleteBooking = catchAsync(async (req, res, next) => {});
