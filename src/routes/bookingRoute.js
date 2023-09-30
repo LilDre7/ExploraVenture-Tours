@@ -16,9 +16,9 @@ const bookController = require("../controllers/bookingController");
 
 //                                        //
 
-router
-  .route("/")
-  .get(authMiddleware.restrictTo("admin"), bookController.getAllBookings);
+router.route(authMiddleware.restrictTo("admin"));
+
+router.route("/").get(bookController.getAllBookings);
 
 router.route("/:id").get(bookController.getOneBooking);
 
