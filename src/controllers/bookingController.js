@@ -60,8 +60,6 @@ exports.getOneBooking = catchAsync(async (req, res, next) => {
 exports.createBooking = catchAsync(async (req, res, next) => {
   const { userId, tourId, price } = req.body;
 
-  console.log(userId, tourId, price);
-
   // Verificar que el tour exista
   const findTour = await BOOKING.findOne({
     where: {
@@ -71,8 +69,10 @@ exports.createBooking = catchAsync(async (req, res, next) => {
     },
   });
 
+  console.log(findTour);
+
   if (!findTour)
-    next(new AppError(404, "El tour con el id:${tourId} no existe 🧑🏾‍🚀 "));
+    next(new AppError(`El tour con el id:${tourId} no existe 🧑🏾‍🚀 `, 404));
 
   const createBooking = await BOOKING.create({
     tourId,

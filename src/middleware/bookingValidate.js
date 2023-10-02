@@ -15,16 +15,11 @@ const validateFields = (req, res, next) => {
 
 exports.validateBooking = [
   body("tourId")
-    .isEmpty()
     .isNumeric()
     .withMessage("Tour id is required and has to numeric"),
   body("userId")
-    .isEmpty()
     .isNumeric()
     .withMessage("User id is required and has to numeric"),
-  body("price")
-    .isEmpty()
-    .isNumeric()
-    .withMessage("Price is required and has to numeric"),
+  body("price").isNumeric().withMessage("Price is required and has to numeric"),
   validateFields,
 ];
