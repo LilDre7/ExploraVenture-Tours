@@ -3,6 +3,7 @@ const BOOKING = require("../models/bookingModel");
 const AppError = require("../utils/appError");
 const USER = require("../models/userModel");
 const TOUR = require("../models/tourModel");
+const trasporter = require("../helpers/mailer");
 
 exports.getAllBookings = catchAsync(async (req, res, next) => {
   const findAllBookings = await BOOKING.findAll({
@@ -58,6 +59,8 @@ exports.getOneBooking = catchAsync(async (req, res, next) => {
 
 // Se debe crear una reserva, enviar userId, tourId, y price por la req.body
 exports.createBooking = catchAsync(async (req, res, next) => {
+  trasporter.sendMail();
+
   const { userId, tourId, price } = req.body;
 
   // Verificar que el tour exista
