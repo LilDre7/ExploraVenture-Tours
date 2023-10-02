@@ -13,13 +13,21 @@ const validateFields = (req, res, next) => {
   next();
 };
 
-exports.validateBooking = [
+exports.validatePost = [
   body("tourId")
     .isNumeric()
-    .withMessage("Tour id is required and has to numeric"),
+    .withMessage("Tour id is required and has to numeric ❌ "),
   body("userId")
     .isNumeric()
-    .withMessage("User id is required and has to numeric"),
-  body("price").isNumeric().withMessage("Price is required and has to numeric"),
+    .withMessage("User id is required and has to numeric ⚔️ "),
+  body("price")
+    .isNumeric()
+    .withMessage("Price is required and has to numeric ❌ "),
   validateFields,
+];
+
+exports.validateUpdate = [
+  body("price")
+    .isNumeric()
+    .withMessage("Solo se permite digitos, menos de 10,000 ❌ "),
 ];

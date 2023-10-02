@@ -24,13 +24,11 @@ router.route("/").get(bookController.getAllBookings);
 
 router.route("/:id").get(bookController.getOneBooking);
 
-router
-  .route("/")
-  .post(validateBook.validateBooking, bookController.createBooking);
+router.route("/").post(validateBook.validatePost, bookController.createBooking);
 
 router
   .route("/:id")
-  .patch(validateBook.validateBooking, bookController.updateBooking);
+  .patch(validateBook.validateUpdate, bookController.updateBooking);
 
 router.route("/:id").delete(bookController.deleteBooking);
 
