@@ -6,6 +6,8 @@ const AppError = require("./utils/appError");
 // ** 🦴 Configuraciones para usar expressJS y nodeJS ** 🦴 //
 const app = express();
 
+app.use(express.static("public", { extensions: ["html"] }));
+
 app.use(express.json());
 
 app.use(cors());

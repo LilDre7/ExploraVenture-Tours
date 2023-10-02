@@ -3,7 +3,7 @@ const BOOKING = require("../models/bookingModel");
 const AppError = require("../utils/appError");
 const USER = require("../models/userModel");
 const TOUR = require("../models/tourModel");
-const trasporter = require("../helpers/mailer");
+// const trasporter = require("../helpers/mailer");
 
 exports.getAllBookings = catchAsync(async (req, res, next) => {
   const findAllBookings = await BOOKING.findAll({
@@ -60,14 +60,14 @@ exports.getOneBooking = catchAsync(async (req, res, next) => {
 // Se debe crear una reserva, enviar userId, tourId, y price por la req.body
 exports.createBooking = catchAsync(async (req, res, next) => {
   const { userId, tourId, price } = req.body;
-  const { email } = req.params;
+  // const { email } = req.params;
 
-  trasporter.sendMail({
-    from: process.env.EMAIL,
-    to: email,
-    subject: "Nueva reserva ✌",
-    body: "Nueva reserva",
-  });
+  // const result = await trasporter.sendMail({
+  //   from: process.env.EMAIL_USERNAME,
+  //   to: email,
+  //   subject: "Nueva reserva ✌",
+  //   text: "Nueva reserva",
+  // });
 
   // Verificar que el tour exista
   const findTour = await BOOKING.findOne({
@@ -81,6 +81,8 @@ exports.createBooking = catchAsync(async (req, res, next) => {
   if (!findTour)
     next(new AppError(`El tour con el id:${tourId} no existe 🧑🏾‍🚀 `, 404));
 
+  // Validar que antes de hacer una reserva el tour este disponible
+
   const createBooking = await BOOKING.create({
     tourId,
     price,
@@ -91,6 +93,7 @@ exports.createBooking = catchAsync(async (req, res, next) => {
     status: "success",
     message: " 🚀 Booking created successfully 🚀 ",
     createBooking,
+    // result,
   });
 });
 

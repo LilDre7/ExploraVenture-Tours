@@ -1,12 +1,13 @@
+require("dotenv").config();
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.office365.com",
-  port: 587,
-  secure: false, // upgrade later with STARTTLS
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true, // upgrade later with STARTTLS
   auth: {
-    user: process.env.EMAIL,
-    pass: process.env.EMAIL_PASSWORD,
+    user: process.env.EMAIL_USERNAME,
+    pass: process.env.EMAIL_USERNAME,
   },
 });
 

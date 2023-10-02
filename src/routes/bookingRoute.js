@@ -25,7 +25,8 @@ router.route("/").get(bookController.getAllBookings);
 router.route("/:id").get(bookController.getOneBooking);
 
 router
-  .route("/:email/code")
+  .route("/")
+  // /:email/code
   .post(validateBook.validatePost, bookController.createBooking);
 
 router
