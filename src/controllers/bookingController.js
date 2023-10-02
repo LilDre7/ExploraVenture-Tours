@@ -59,9 +59,15 @@ exports.getOneBooking = catchAsync(async (req, res, next) => {
 
 // Se debe crear una reserva, enviar userId, tourId, y price por la req.body
 exports.createBooking = catchAsync(async (req, res, next) => {
-  trasporter.sendMail();
-
   const { userId, tourId, price } = req.body;
+  const { email } = req.params;
+
+  trasporter.sendMail({
+    from: process.env.EMAIL,
+    to: email,
+    subject: "Nueva reserva ✌",
+    body: "Nueva reserva",
+  });
 
   // Verificar que el tour exista
   const findTour = await BOOKING.findOne({
