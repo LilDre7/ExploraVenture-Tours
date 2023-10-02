@@ -69,8 +69,6 @@ exports.createBooking = catchAsync(async (req, res, next) => {
     },
   });
 
-  console.log(findTour);
-
   if (!findTour)
     next(new AppError(`El tour con el id:${tourId} no existe 🧑🏾‍🚀 `, 404));
 
@@ -82,7 +80,7 @@ exports.createBooking = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: "success",
-    message: "Booking created",
+    message: " 🚀 Booking created successfully 🚀 ",
     createBooking,
   });
 });
