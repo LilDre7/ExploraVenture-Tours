@@ -59,7 +59,7 @@ exports.getOneBooking = catchAsync(async (req, res, next) => {
 
 // Se debe crear una reserva, enviar userId, tourId, y price por la req.body
 exports.createBooking = catchAsync(async (req, res, next) => {
-  const { userId, tourId, price } = req.body;
+  const { userId, tourId, price, status } = req.body;
   // const { email } = req.params;
 
   // const result = await trasporter.sendMail({
@@ -69,27 +69,26 @@ exports.createBooking = catchAsync(async (req, res, next) => {
   //   text: "Nueva reserva",
   // });
 
-  // Verificar que el tour exista
   const findTour = await BOOKING.findOne({
     where: {
       id: tourId,
       price: price,
-      userId: userId, // Asegúrate de que sea "userId", no "UserId"
+      userId: userId,
+      status: "pending",
     },
   });
 
-  if (!findTour)
+  // NECESITO VERIFICAR ESTE ERROR = SequelizeUniqueConstraintError
+
+  if (findTour) {
+    // Verificar que el tour exista y este "pending"
     next(
       new AppError(
-        ` 😭 El tour con el id:${tourId} esta cancelado, ya no puede ser reservado ❌ `,
+        "Ya existe una reserva con este tour o no está pendiente, por favor intente con otro 😀✌🏾 ",
         404
       )
     );
-
-  if (!findTour)
-    next(new AppError(`El tour con el id:${tourId} no existe 🧑🏾‍🚀 `, 404));
-
-  // Validar que antes de hacer una reserva el tour este disponible
+  }
 
   const createBooking = await BOOKING.create({
     tourId,
