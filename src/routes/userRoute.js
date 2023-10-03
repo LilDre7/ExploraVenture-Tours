@@ -19,15 +19,13 @@ router.use(authMiddleware.protect);
 
 router.route("/").get(userController.getAllUsers); // ✅
 
-router
-  .route("/password/:id")
-  .patch(
-    authMiddleware.protect,
-    authMiddleware.validateUserId,
-    userValidate.validateNewPassword,
-    authMiddleware.protectOrderOwner,
-    userController.updatePassword
-  ); // ✅
+router.route("/password/:id").patch(
+  authMiddleware.protect,
+  authMiddleware.validateUserId,
+  userValidate.validateNewPassword,
+  // authMiddleware.protectOrderOwner,
+  userController.updatePassword
+); // ✅
 
 router.route("/:id").get(authMiddleware.validateUserId, userController.getUser); // ✅
 

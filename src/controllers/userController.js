@@ -24,6 +24,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   const { user } = req;
 
   const { currentPassword, newPassword } = req.body;
+  console.log(currentPassword);
 
   if (currentPassword === newPassword) {
     return next(

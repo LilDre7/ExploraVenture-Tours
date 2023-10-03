@@ -26,7 +26,7 @@ exports.authValidate = [
   body("password")
     .not()
     .isEmpty()
-    .matches(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/)
+    .matches(/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,16}$/)
     .withMessage(
       "La contraseña debe tener entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula."
     ),
