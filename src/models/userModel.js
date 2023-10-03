@@ -29,7 +29,7 @@ const USER = db.define("Users", {
   },
   passwordChangeAt: {
     type: DataTypes.DATE,
-    allowNull: false,
+    allowNull: true,
   },
   role: {
     type: DataTypes.ENUM("user", "guide", "admin"),
