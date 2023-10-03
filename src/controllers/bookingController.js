@@ -59,10 +59,8 @@ exports.getOneBooking = catchAsync(async (req, res, next) => {
 
 // Se debe crear una reserva, enviar userId, tourId, y price por la req.body
 exports.createBooking = catchAsync(async (req, res, next) => {
-  const { userId, tourId, price, status } = req.body;
+  const { userId, tourId, price } = req.body;
   // const { email } = req.params;
-  console.log(status);
-  console.log(BOOKING.status);
 
   // const result = await trasporter.sendMail({
   //   from: process.env.EMAIL_USERNAME,
