@@ -59,8 +59,10 @@ exports.getOneBooking = catchAsync(async (req, res, next) => {
 
 // Se debe crear una reserva, enviar userId, tourId, y price por la req.body
 exports.createBooking = catchAsync(async (req, res, next) => {
-  const { userId, tourId, price } = req.body;
+  const { userId, tourId, price, status } = req.body;
   // const { email } = req.params;
+  console.log(status);
+  console.log(BOOKING.status);
 
   // const result = await trasporter.sendMail({
   //   from: process.env.EMAIL_USERNAME,
@@ -77,6 +79,14 @@ exports.createBooking = catchAsync(async (req, res, next) => {
       userId: userId, // Asegúrate de que sea "userId", no "UserId"
     },
   });
+
+  if (!findTour)
+    next(
+      new AppError(
+        ` 😭 El tour con el id:${tourId} esta cancelado, ya no puede ser reservado ❌ `,
+        404
+      )
+    );
 
   if (!findTour)
     next(new AppError(`El tour con el id:${tourId} no existe 🧑🏾‍🚀 `, 404));
