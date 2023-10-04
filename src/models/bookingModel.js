@@ -15,7 +15,6 @@ const BOOKING = db.define("bookings", {
   userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    unique: false,
   },
   price: {
     type: DataTypes.INTEGER,

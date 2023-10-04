@@ -3,7 +3,6 @@ const colors = require("colors");
 const app = require("./app");
 const { db } = require("./db/config");
 const INITMODEL = require("./models/initModel");
-const initModel = require("./models/initModel");
 
 db.authenticate()
   .then(() => {
@@ -13,7 +12,7 @@ db.authenticate()
 
 INITMODEL();
 
-db.sync({ force: false })
+db.sync({ force: true })
   .then(() => {
     console.log("Database synced 🦧 ".bgMagenta.black);
   })
