@@ -80,7 +80,7 @@ exports.createBooking = catchAsync(async (req, res, next) => {
       id: tourId,
       price: price,
       userId: userId,
-      status: "pending",
+      status: "pending" , "completed"
     },
   });
 
