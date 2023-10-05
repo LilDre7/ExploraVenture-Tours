@@ -69,6 +69,12 @@ exports.createBooking = catchAsync(async (req, res, next) => {
   //   text: "Nueva reserva",
   // });
 
+  // 📱 Pending: hizo una reserva pero el monto con el que aparto la reserva, no es el monto de lo que vale el tour, si no una parte. (este monto es el Price que esta en la tabla booking)
+
+  // 📱 Completed: Cuando se hace la reserva y se cancela o paga todo el monto de lo que vale el tour el status es completed
+
+  // 📱 Cancelled: cuando se cancela una reserva
+
   const findTour = await BOOKING.findOne({
     where: {
       id: tourId,
