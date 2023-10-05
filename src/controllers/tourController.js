@@ -85,6 +85,7 @@ exports.createTour = catchAsync(async (req, res, next) => {
     difficulty,
     ratingsAverage,
     ratingsQuantity,
+    // Se debe crear un precio por defecto para el tour 💰
     price,
     priceDiscount,
     summary,
@@ -96,7 +97,7 @@ exports.createTour = catchAsync(async (req, res, next) => {
   });
 
   if (!newTour)
-    next(new AppError(" 🧨 Hubo un error al crear el tour deseado. 🧨 ", 500));
+    next(new AppError(" 🧨 Hubo un error al crear el tour deseado. 🧨 ", 404));
 
   res.status(201).json({
     status: "success",
