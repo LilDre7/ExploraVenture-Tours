@@ -78,8 +78,6 @@ exports.createBooking = catchAsync(async (req, res, next) => {
 
   console.log(findPriceTour);
 
-  // 📱 Completed: Cuando se hace la reserva y se cancela o paga todo el monto de lo que vale el tour el status es completed
-
   // 📱 Cancelled: cuando se cancela una reserva
 
   const findTour = await BOOKING.findOne({
@@ -90,6 +88,16 @@ exports.createBooking = catchAsync(async (req, res, next) => {
       status: "pending",
     },
   });
+
+  // 📱 Completed: Cuando se hace la reserva y se cancela o paga todo el monto de lo que vale el tour el status es completed
+  if (findPriceTour.price === price) {
+    next(
+      new AppError(
+        "El precio de la reserva es el mismo que el precio del tour, por favor intente con otro 😀✌🏾 ",
+        404
+      )
+    );
+  }
 
   // NECESITO VERIFICAR ESTE ERROR = SequelizeUniqueConstraintError
 
