@@ -6,8 +6,33 @@ const INITMODEL = require("./models/initModel");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUI = require("swagger-ui-express");
 
-// SWAGGER
-app.use("/api-doc", swaggerUI.serve, swaggerUI.setup(swaggerJSDoc()));
+// SWAGGER SETTING
+const URL__BASE = "http://localhost:5000";
+
+const swaggerSpec = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "API TOURS",
+      version: "1.0.0",
+      description: "A simple Express Library API",
+    },
+    server: [
+      {
+        url: URL__BASE,
+      },
+    ],
+  },
+};
+
+console.log(swaggerSpec.definition.server);
+
+// SWAGGER MIDDLEWARE
+app.use(
+  "/api-doc",
+  swaggerUI.serve,
+  swaggerUI.setup(swaggerJSDoc(swaggerSpec))
+);
 
 db.authenticate()
   .then(() => {
