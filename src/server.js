@@ -3,6 +3,11 @@ const colors = require("colors");
 const app = require("./app");
 const { db } = require("./db/config");
 const INITMODEL = require("./models/initModel");
+const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerUI = require("swagger-ui-express");
+
+// SWAGGER
+app.use("/api-doc", swaggerUI.serve, swaggerUI.setup(swaggerJSDoc()));
 
 db.authenticate()
   .then(() => {
