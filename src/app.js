@@ -48,15 +48,15 @@ app.use("/api/v1/booking", bookingRoute);
 
 //** 🪢 Funcion para detectar rutas invalidas y enviar un mensaje de error 🪢 **//
 
-app.use(`*`, (req, res, next) => {
-  return next(
-    new AppError(
-      `La ruta es incorrecta o no existe ${req.originalUrl} 🧨🧨 `,
-      404,
-      "fail"
-    )
-  );
-});
+// app.use(`*`, (req, res, next) => {
+//   return next(
+//     new AppError(
+//       `La ruta es incorrecta o no existe ${req.originalUrl} 🧨🧨 `,
+//       404,
+//       "fail"
+//     )
+//   );
+// });
 
 app.use(globalErrorHandler);
 

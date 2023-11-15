@@ -3,12 +3,11 @@ const colors = require("colors");
 const app = require("./app");
 const { db } = require("./db/config");
 const INITMODEL = require("./models/initModel");
+const path = require("path");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUI = require("swagger-ui-express");
 
 // SWAGGER SETTING
-const URL__BASE = "http://localhost:5000";
-
 const swaggerSpec = {
   definition: {
     openapi: "3.0.0",
@@ -19,13 +18,14 @@ const swaggerSpec = {
     },
     server: [
       {
-        url: URL__BASE,
+        url: "http://localhost:5000",
       },
     ],
   },
+  apis: [` ${path.join(__dirname, "./routes/*.js")} `],
 };
 
-console.log(swaggerSpec.definition.server);
+console.log(swaggerSpec);
 
 // SWAGGER MIDDLEWARE
 app.use(

@@ -5,6 +5,7 @@ const generateJWT = require("../utils/jwt");
 const bcrypt = require("bcryptjs");
 const { getStorage, ref, uploadBytes } = require("firebase/storage");
 const { storage } = require("../utils/firabase");
+const { SERIALIZABLE } = require("sequelize/types/table-hints");
 
 exports.signup = catchAsync(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -49,6 +50,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     },
   });
 });
+
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
