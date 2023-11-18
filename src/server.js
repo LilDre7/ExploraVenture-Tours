@@ -25,8 +25,6 @@ const swaggerSpec = {
   apis: [` ${path.join(__dirname, "./routes/*.js")} `],
 };
 
-console.log(swaggerSpec);
-
 // SWAGGER MIDDLEWARE
 app.use(
   "/api-doc",
